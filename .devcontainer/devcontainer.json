@@ -1,0 +1,21 @@
+{
+  "name": "SuperKart Deployment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [7860, 8501],
+  "portsAttributes": {
+    "7860": {
+      "label": "Backend API",
+      "onAutoForward": "notify",
+      "visibility": "public"
+    },
+    "8501": {
+      "label": "Frontend UI",
+      "onAutoForward": "notify",
+      "visibility": "public"
+    }
+  },
+  "postStartCommand": "docker network inspect superkart-net >/dev/null 2>&1 || docker network create superkart-net; docker start backend frontend 2>/dev/null || true"
+}
